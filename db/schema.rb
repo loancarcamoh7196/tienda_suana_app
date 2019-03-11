@@ -228,7 +228,7 @@ ActiveRecord::Schema.define(version: 2019_03_11_175721) do
     t.integer "points", default: 0
     t.string "provider"
     t.string "uid"
-    t.string "image", default: "<i class=\"fas fa-user-astronaut\"></i>"
+    t.string "image", default: "<i class=\"fas fa-user-astronaut fa-4x\"></i>"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
