@@ -1,3 +1,4 @@
+<%# Vista parcail vista de Boletas %>
 <div class="table-responsive">
   <table class="table table-hover" id="list-address" >
     <thead>
@@ -19,7 +20,9 @@
         </tr>
       <% end %>
       <% if ! @billings.present? %>
-        <p id="msj-no-data">No has registrado direcciones para tus envíos</p>
+        <tr id="msj-no-data">
+          <td >No has registrado direcciones para tus envíos</td>
+        </tr>
       <% end %>
     </tbody>
   </table>

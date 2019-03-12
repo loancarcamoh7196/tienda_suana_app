@@ -5,13 +5,11 @@ class ProductsController < ApplicationController
   # load_and_authorize_resource
 
   # GET /products
-  # GET /products.json
   def index
     @products = Product.all
   end
 
   # GET /products/1
-  # GET /products/1.json
   def show
     @clusters = Cluster.where(product_id: params[:id])
     @detail = Detail.new
@@ -27,12 +25,10 @@ class ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
-
     @categories = Category.all.pluck(:name, :id)
   end
 
   # POST /products
-  # POST /products.json
   def create
     @product = Product.new(product_params)
     
@@ -40,18 +36,14 @@ class ProductsController < ApplicationController
       params[:product][:category_id].each do |c|
         Cluster.create(product: @product, category_id: c) if c.present?
       end
-
-      flash[:success] = 'Product was successfully created.'
+      flash[:success] = 'Producto ha sido creado exitosamente.'
       redirect_to product_path(@product)
     end
-    
   end
 
   # PATCH/PUT /products/1
-  # PATCH/PUT /products/1.json
   def update
     respond_to do |format|
-
       if @product.update(product_params)
         Cluster.where(product_id: params[:id]).destroy_all
 
@@ -69,26 +61,25 @@ class ProductsController < ApplicationController
   end
 
   # DELETE /products/1
-  # DELETE /products/1.json
   def destroy
     @product.destroy
     respond_to do |format|
-      format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
-      format.json { head :no_content }
+      flash[:danger] = 'Producto has sido eliminado exitosamente.'
+      format.html { redirect_to products_url }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
-  private
-    def authors
-      @authors = Author.all.pluck(:name, :id)
-    end
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def product_params
-      params.require(:product).permit(:title, :description, :author_id, :point_quantity, :is_gift)
-    end
+  def set_product
+    @product = Product.find(params[:id])
+  end
+  private 
+  def authors
+    @authors = Author.all.pluck(:name, :id)
+  end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def product_params
+    params.require(:product).permit(:title, :description, :author_id, :point_quantity, :is_gift)
+  end
 end

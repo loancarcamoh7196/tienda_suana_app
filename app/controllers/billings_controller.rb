@@ -1,10 +1,12 @@
 class BillingsController < ApplicationController
   before_action :authenticate_user!
   
+  #Metodo que realia pre proceso para pago via paypal
   def pre_pay
     orders = current_user.cart
     total = orders.get_total
     items = orders.to_paypal_items
+    
     
     payment = Billing.init_payment(items, total)
     
@@ -17,6 +19,7 @@ class BillingsController < ApplicationController
 		end
   end
 
+  #Método que ejecuta pago por paypal
   def execute
     paypal_payment = PayPal::SDK::REST::Payment.find(params[:paymentId])
     
@@ -49,10 +52,12 @@ class BillingsController < ApplicationController
     end
   end
 
+  #Metodo que devuelve billing de usuario actual(current_user)
   def my_billing
     @billings = Billing.where(user: current_user)
   end
 
+  #Método que devuelve una boleta  y sus detalles
   def detail_billing
     @billing = Billing.find(params[:id])
     @orders = current_user.orders.where(paided: true, billing_id: params[:id])
@@ -62,6 +67,7 @@ class BillingsController < ApplicationController
     end
   end
 
+  #Método que devuelve una boleta  y sus detalles, pero en pdf
   def show
     @billing = Billing.find(params[:id])
     @orders = current_user.orders.where(paided: true, billing_id: params[:id])
@@ -77,4 +83,20 @@ class BillingsController < ApplicationController
       end
     end
   end
+
+  # GET /choose_address
+  #Página de selección de dirección de envío
+  def direction
+    orders = current_user.cart
+    total = orders.get_total
+    items = orders.to_paypal_items
+    @addresses = Address.where(user: current_user).order('id DESC')
+    @direction = Address.new
+  end
+
+
+  def set_direction
+    @address = Address.find(params[:id])
+  end
+  
 end

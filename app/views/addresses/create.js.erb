@@ -1,3 +1,4 @@
-$('#msj-no-data').html();
+$('#msj-no-data').html('');
 $('#list-address').append("<%= j render 'address', address: @address %>");
+$('#list-address').prepend("<%= j render 'addresses/address-row', address: @address %>");
 $('#modal').modal('hide');
