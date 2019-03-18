@@ -19,7 +19,7 @@ class Ability
       can [:create, :cart, :remove_one_item, :destroy, :buy, :bought_products, :empty_cart], Order
       can [:index, :create, :destroy], Wishlist
       can [:create, :new], Suggestion
-      can :manage, Billing
+      can :manage, Billing, Address
       can :manage, :page
       can :manage, :profile
     else
