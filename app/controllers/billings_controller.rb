@@ -1,7 +1,6 @@
 class BillingsController < ApplicationController
   before_action :authenticate_user!
   
-  
   def pre_pay
     orders = current_user.cart
     total = orders.get_total

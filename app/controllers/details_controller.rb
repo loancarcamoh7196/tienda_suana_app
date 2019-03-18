@@ -34,7 +34,7 @@ class DetailsController < ApplicationController
     @list_detail = Detail.where(detail_id: params[:id])
     
     #Necesario para mostrar Comentarios 
-    @comments = Comment.where(detail: @detail).order('created_at DESC')
+    @comments = Comment.where(detail: @detail, banned: false).order('created_at DESC')
     @comment = Comment.new
   end
   

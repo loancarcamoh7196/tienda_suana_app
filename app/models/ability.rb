@@ -14,12 +14,12 @@ class Ability
       can [:read, :update, :banned], Comment
       can :manage, :page
     elsif user.user?
-      can [:index, :show], [Detail]
+      can [:index, :show, :view_for_category, :list_gift], [Detail]
       can [:edit, :update, :destroy], Comment, user_id: user.id
       can [:create, :cart, :remove_one_item, :destroy, :buy, :bought_products, :empty_cart], Order
       can [:index, :create, :destroy], Wishlist
       can [:create, :new], Suggestion
-      can :manage, Billing, Address
+      can :manage, [Billing, Address, Comment]
       can :manage, :page
       can :manage, :profile
     else
